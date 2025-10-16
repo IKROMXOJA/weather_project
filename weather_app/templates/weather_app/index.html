@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Pro 🌤</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ✅ Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- ✅ Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #6dd5ed 0%, #2193b0 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .weather-card {
+            background: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-weight: 700;
+            color: #2193b0;
+            margin-bottom: 25px;
+        }
+
+        .input-group input {
+            padding: 12px;
+            font-size: 16px;
+        }
+
+        .btn-custom {
+            background-color: #2193b0;
+            color: #fff;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background-color: #176f84;
+        }
+
+        .weather-icon img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .weather-info h3 {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .weather-info p {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .stats-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .stats-buttons a {
+            text-decoration: none;
+        }
+
+        .btn-outline-premium {
+            border: 2px solid #2193b0;
+            color: #2193b0;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: all 0.3s;
+        }
+
+        .btn-outline-premium:hover {
+            background-color: #2193b0;
+            color: white;
+        }
+
+        .footer-link {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            color: #2193b0;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: #176f84;
+        }
+
+        @media (max-width: 576px) {
+            .weather-card {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="weather-card">
+        <h1 class="mb-4">🌤 Weather Finder</h1>
+
+        <div class="alert alert-info p-2" style="max-width: 400px; margin: 0 auto;">
+            ⬆️ Shahar nomini katta harflarda kiriting (masalan: <strong>TASHKENT</strong>)
+        </div>
+
+        <!-- 🔎 Qidiruv formasi -->
+        <form method="POST" class="mb-4 mt-3">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="text" name="city" class="form-control" placeholder="Enter city name..." required>
+                <button class="btn btn-custom" type="submit">Search</button>
+            </div>
+        </form>
+
+        <!-- ⚠️ Xatolik xabari -->
+        {% if error_message %}
+            <div class="alert alert-danger mt-3">
+                {{ error_message }}
+            </div>
+        {% endif %}
+
+        <!-- 🌡 Ob-havo natijasi -->
+        {% if weather_data %}
+        <div class="weather-info mt-4">
+            <h3>{{ weather_data.city }}</h3>
+            <div class="weather-icon my-3">
+                <img src="https://openweathermap.org/img/wn/{{ weather_data.icon }}@2x.png" alt="icon">
+            </div>
+            <p>🌡 Temperature: <strong>{{ weather_data.temperature }}°C</strong></p>
+            <p class="text-capitalize">☁ {{ weather_data.description }}</p>
+        </div>
+
+        <!-- 📊 Premium tugmalar -->
+        <div class="stats-buttons">
+            <a href="{% url 'weather_app:weekly_weather' %}" class="btn btn-outline-premium">📅 1 Haftalik</a>
+            <a href="{% url 'weather_app:monthly_weather' %}" class="btn btn-outline-premium">📆 1 Oylik</a>
+        </div>
+        {% endif %}
+
+        <a href="{% url 'weather_app:stats' %}" class="footer-link">📊 Umumiy Statistikani ko‘rish</a>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

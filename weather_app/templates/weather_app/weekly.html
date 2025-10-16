@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1 Haftalik Ob-havo</title>
+    <style>
+        body { font-family: Arial; text-align: center; padding: 20px; background: linear-gradient(to right,#74ebd5,#ACB6E5);}
+        h1 { margin-bottom: 20px; }
+        ul { list-style: none; padding: 0; }
+        li { background: rgba(255,255,255,0.2); margin: 5px 0; padding: 10px; border-radius: 6px; }
+    </style>
+</head>
+<body>
+
+<h1>📅 1 Haftalik Ob-havo</h1>
+<ul id="weekList"></ul>
+
+<script>
+const apiKey = "532ea0981e65efede7cc050e9134f1b8"; // loyihangizdagi API kalit
+async function fetchWeekWeather() {
+    try {
+        const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=41.3111&lon=69.2797&exclude=minutely,hourly,alerts&units=metric&appid=${apiKey}`);
+        const data = await response.json();
+        const weekList = document.getElementById("weekList");
+        weekList.innerHTML = "";
+
+        data.daily.slice(0, 7).forEach(day => {
+            const date = new Date(day.dt * 1000);
+            weekList.innerHTML += `<li>${date.toLocaleDateString('uz-UZ', { weekday: 'long' })}: ${day.weather[0].description}, ${Math.round(day.temp.day)}°C</li>`;
+        });
+    } catch (err) {
+        console.error("Xatolik:", err);
+        document.getElementById("weekList").innerHTML = "<li>Ob-havo ma'lumotini olishda xatolik yuz berdi.</li>";
+    }
+}
+fetchWeekWeather();
+</script>
+
+</body>
+</html>

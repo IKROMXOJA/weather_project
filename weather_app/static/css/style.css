@@ -1,0 +1,92 @@
+/* 🌤 WeatherApp uchun asosiy style fayli */
+
+/* --- Umumiy sozlamalar --- */
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f6f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* --- Navbar --- */
+.navbar {
+    background: linear-gradient(90deg, #007bff, #00aaff);
+}
+.navbar-brand {
+    font-size: 1.5rem;
+}
+.navbar .btn-outline-light:hover {
+    background-color: #ffffff;
+    color: #007bff;
+}
+
+/* --- Qidiruv kartasi --- */
+.card {
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Qidiruv input --- */
+form input[type="text"] {
+    padding: 0.8rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #ccc;
+}
+form button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+}
+
+/* --- Natija kartasi --- */
+.display-4 {
+    color: #007bff;
+    font-weight: 700;
+}
+.card.text-center h4 {
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+.card.text-center p {
+    font-size: 1rem;
+}
+
+/* --- Alert --- */
+.alert {
+    border-radius: 0.75rem;
+}
+
+/* --- Badge (recent cities) --- */
+.badge {
+    font-size: 0.95rem;
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.badge:hover {
+    background-color: #0056b3;
+}
+
+/* --- Footer --- */
+footer {
+    background: linear-gradient(90deg, #007bff, #00aaff);
+    color: #fff;
+}
+footer small {
+    opacity: 0.8;
+}
+
+/* --- Responsiv dizayn --- */
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+    .display-4 {
+        font-size: 2.5rem;
+    }
+}
