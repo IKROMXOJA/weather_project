@@ -1,169 +1,176 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <title>Weather Pro 🌤</title>
+    <title>🌤 Weather Finder</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- ✅ Bootstrap -->
+
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- ✅ Google Fonts -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
         body {
-            background: linear-gradient(135deg, #6dd5ed 0%, #2193b0 100%);
+            background: linear-gradient(to bottom, #6dd5ed, #2193b0);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Poppins', sans-serif;
+            color: #fff;
         }
 
-        .weather-card {
-            background: #fff;
-            border: none;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 500px;
-            width: 100%;
+        .weather-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 30px 40px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
             animation: fadeIn 0.6s ease-in-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-15px); }
+            from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        h1 {
-            font-weight: 700;
-            color: #2193b0;
-            margin-bottom: 25px;
+        .search-box input {
+            padding: 14px;
+            font-size: 18px;
+            border-radius: 30px 0 0 30px;
+            border: none;
+            outline: none;
         }
 
-        .input-group input {
-            padding: 12px;
-            font-size: 16px;
-        }
-
-        .btn-custom {
+        .search-box button {
+            border-radius: 0 30px 30px 0;
+            border: none;
             background-color: #2193b0;
-            color: #fff;
+            color: white;
+            padding: 14px 20px;
             font-weight: 600;
-            transition: background-color 0.3s ease;
+            transition: background 0.3s;
         }
 
-        .btn-custom:hover {
+        .search-box button:hover {
             background-color: #176f84;
         }
 
         .weather-icon img {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
         }
 
-        .weather-info h3 {
-            font-weight: 600;
-            color: #333;
+        .city-name {
+            font-size: 2rem;
+            font-weight: 700;
         }
 
-        .weather-info p {
-            margin: 0;
-            font-size: 18px;
+        .temperature {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-top: 10px;
         }
 
-        .stats-buttons {
+        .description {
+            font-size: 1.2rem;
+            text-transform: capitalize;
+            margin-top: 5px;
+        }
+
+        .details {
+            margin-top: 20px;
             display: flex;
-            justify-content: center;
-            gap: 10px;
+            justify-content: space-around;
+            font-size: 0.95rem;
+        }
+
+        .details div {
+            text-align: center;
+        }
+
+        .stats-link {
+            display: inline-block;
             margin-top: 25px;
-        }
-
-        .stats-buttons a {
-            text-decoration: none;
-        }
-
-        .btn-outline-premium {
-            border: 2px solid #2193b0;
-            color: #2193b0;
             font-weight: 600;
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 15px;
+            border: 2px solid #fff;
             border-radius: 30px;
             transition: all 0.3s;
         }
 
-        .btn-outline-premium:hover {
-            background-color: #2193b0;
-            color: white;
-        }
-
-        .footer-link {
-            display: inline-block;
-            margin-top: 20px;
-            text-decoration: none;
-            font-weight: 500;
+        .stats-link:hover {
+            background: #fff;
             color: #2193b0;
-            transition: color 0.3s;
         }
 
-        .footer-link:hover {
-            color: #176f84;
+        .alert-info {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: #fff;
         }
 
-        @media (max-width: 576px) {
-            .weather-card {
-                padding: 25px;
-            }
-        }
     </style>
 </head>
 <body>
 
-    <div class="weather-card">
-        <h1 class="mb-4">🌤 Weather Finder</h1>
+    <div class="weather-box">
+        <h2 class="mb-3">🌤 Weather Finder</h2>
 
-        <div class="alert alert-info p-2" style="max-width: 400px; margin: 0 auto;">
+        <div class="alert alert-info p-2 mb-3">
             ⬆️ Shahar nomini katta harflarda kiriting (masalan: <strong>TASHKENT</strong>)
         </div>
 
-        <!-- 🔎 Qidiruv formasi -->
-        <form method="POST" class="mb-4 mt-3">
+        <!-- Qidiruv formasi -->
+        <form method="POST" class="search-box mb-4 d-flex">
             {% csrf_token %}
-            <div class="input-group">
-                <input type="text" name="city" class="form-control" placeholder="Enter city name..." required>
-                <button class="btn btn-custom" type="submit">Search</button>
-            </div>
+            <input type="text" name="city" class="form-control" placeholder="Enter city name..." required>
+            <button type="submit">Qidirish</button>
         </form>
 
-        <!-- ⚠️ Xatolik xabari -->
+        <!-- Xatolik xabari -->
         {% if error_message %}
             <div class="alert alert-danger mt-3">
                 {{ error_message }}
             </div>
         {% endif %}
 
-        <!-- 🌡 Ob-havo natijasi -->
+        <!-- Natija bo‘lsa -->
         {% if weather_data %}
-        <div class="weather-info mt-4">
-            <h3>{{ weather_data.city }}</h3>
-            <div class="weather-icon my-3">
-                <img src="https://openweathermap.org/img/wn/{{ weather_data.icon }}@2x.png" alt="icon">
+        <div class="weather-icon mb-3">
+            <img src="https://openweathermap.org/img/wn/{{ weather_data.icon }}@2x.png" alt="icon">
+        </div>
+        <div class="city-name">{{ weather_data.city }}</div>
+        <div class="temperature">{{ weather_data.temperature }}°C</div>
+        <div class="description">{{ weather_data.description }}</div>
+
+        <div class="details mt-4">
+            <div>
+                <strong>💧 Namlik</strong><br>
+                {{ weather_data.humidity|default:"—" }}%
             </div>
-            <p>🌡 Temperature: <strong>{{ weather_data.temperature }}°C</strong></p>
-            <p class="text-capitalize">☁ {{ weather_data.description }}</p>
+            <div>
+                <strong>🌬 Shamol</strong><br>
+                {{ weather_data.wind|default:"—" }} km/soat
+            </div>
+            <div>
+                <strong>☁ Holat</strong><br>
+                {{ weather_data.description }}
+            </div>
         </div>
 
-        <!-- 📊 Premium tugmalar -->
-        <div class="stats-buttons">
-            <a href="{% url 'weather_app:weekly_weather' %}" class="btn btn-outline-premium">📅 1 Haftalik</a>
-            <a href="{% url 'weather_app:monthly_weather' %}" class="btn btn-outline-premium">📆 1 Oylik</a>
-        </div>
+        <a href="{% url 'weather_app:stats' %}" class="stats-link mt-4">
+            📊 Umumiy statistikani ko‘rish
+        </a>
         {% endif %}
-
-        <a href="{% url 'weather_app:stats' %}" class="footer-link">📊 Umumiy Statistikani ko‘rish</a>
     </div>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
